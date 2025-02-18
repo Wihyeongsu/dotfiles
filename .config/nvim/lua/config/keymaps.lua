@@ -1,79 +1,72 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+local discipline = require("craftzdog.discipline")
+
+discipline.cowboy()
+
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
-local Util = require("lazyvim.util")
-local Snacks = require("snacks")
 
-keymap.set("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", { silent = true })
-keymap.set("n", "<C-j>", "<Cmd>NvimTmuxNavigateDown<CR>", { silent = true })
-keymap.set("n", "<C-k>", "<Cmd>NvimTmuxNavigateUp<CR>", { silent = true })
-keymap.set("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", { silent = true })
-keymap.set("n", "<C-\\>", "<Cmd>NvimTmuxNavigateLastActive<CR>", { silent = true })
-keymap.set("n", "<C-Space>", "<Cmd>NvimTmuxNavigateNavigateNext<CR>", { silent = true })
+-- Do things without affecting the registers
+keymap.set("n", "x", '"_x')
+keymap.set("n", "<Leader>p", '"0p')
+keymap.set("n", "<Leader>P", '"0P')
+keymap.set("v", "<Leader>p", '"0p')
+keymap.set("n", "<Leader>c", '"_c')
+keymap.set("n", "<Leader>C", '"_C')
+keymap.set("v", "<Leader>c", '"_c')
+keymap.set("v", "<Leader>C", '"_C')
+keymap.set("n", "<Leader>d", '"_d')
+keymap.set("n", "<Leader>D", '"_D')
+keymap.set("v", "<Leader>d", '"_d')
+keymap.set("v", "<Leader>D", '"_D')
 
--- Borderless terminal
--- vim.keymap.set("n", "<C-/>", function()
---   Snacks.terminal.get(nil, { border = "none" })
--- end, { desc = "Term with border" })
+-- Increment/decrement
+keymap.set("n", "+", "<C-a>")
+keymap.set("n", "-", "<C-x>")
 
--- Borderless lazygit
-vim.keymap.set("n", "<leader>gg", function()
-  Snacks.terminal.get("lazygit", { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false, border = "none" })
-end, { desc = "Lazygit (root dir)" })
+-- Delete a word backwards
+keymap.set("n", "dw", 'vb"_d')
 
-keymap.del({ "n", "i", "v" }, "<A-j>")
-keymap.del({ "n", "i", "v" }, "<A-k>")
-keymap.del("n", "<C-Left>")
-keymap.del("n", "<C-Down>")
-keymap.del("n", "<C-Up>")
-keymap.del("n", "<C-Right>")
+-- Select all
+keymap.set("n", "<C-a>", "gg<S-v>G")
 
-keymap.set("n", "<M-h>", '<Cmd>lua require("tmux").resize_left()<CR>', { silent = true })
-keymap.set("n", "<M-j>", '<Cmd>lua require("tmux").resize_bottom()<CR>', { silent = true })
-keymap.set("n", "<M-k>", '<Cmd>lua require("tmux").resize_top()<CR>', { silent = true })
-keymap.set("n", "<M-l>", '<Cmd>lua require("tmux").resize_right()<CR>', { silent = true })
+-- Save with root permission (not working for now)
+--vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
-local set_keymap = vim.api.nvim_set_keymap
+-- Disable continuations
+keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
+keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
 
--- Split windows
-keymap.set("n", "ss", ":vsplit<Return>", opts)
-keymap.set("n", "sv", ":split<Return>", opts)
+-- Jumplist
+keymap.set("n", "<C-m>", "<C-i>", opts)
 
--- Tabs
-keymap.set("n", "te", ":tabedit", opts)
+-- New tab
+keymap.set("n", "te", ":tabedit")
 keymap.set("n", "<tab>", ":tabnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
+-- Split window
+keymap.set("n", "ss", ":split<Return>", opts)
+keymap.set("n", "sv", ":vsplit<Return>", opts)
+-- Move window
+keymap.set("n", "sh", "<C-w>h")
+keymap.set("n", "sk", "<C-w>k")
+keymap.set("n", "sj", "<C-w>j")
+keymap.set("n", "sl", "<C-w>l")
 
--- package-info keymaps
-set_keymap(
-  "n",
-  "<leader>cpt",
-  "<cmd>lua require('package-info').toggle()<cr>",
-  { silent = true, noremap = true, desc = "Toggle" }
-)
-set_keymap(
-  "n",
-  "<leader>cpd",
-  "<cmd>lua require('package-info').delete()<cr>",
-  { silent = true, noremap = true, desc = "Delete package" }
-)
-set_keymap(
-  "n",
-  "<leader>cpu",
-  "<cmd>lua require('package-info').update()<cr>",
-  { silent = true, noremap = true, desc = "Update package" }
-)
-set_keymap(
-  "n",
-  "<leader>cpi",
-  "<cmd>lua require('package-info').install()<cr>",
-  { silent = true, noremap = true, desc = "Install package" }
-)
-set_keymap(
-  "n",
-  "<leader>cpc",
-  "<cmd>lua require('package-info').change_version()<cr>",
-  { silent = true, noremap = true, desc = "Change package version" }
-)
+-- Resize window
+keymap.set("n", "<C-w><left>", "<C-w><")
+keymap.set("n", "<C-w><right>", "<C-w>>")
+keymap.set("n", "<C-w><up>", "<C-w>+")
+keymap.set("n", "<C-w><down>", "<C-w>-")
+
+-- Diagnostics
+keymap.set("n", "<C-j>", function()
+	vim.diagnostic.goto_next()
+end, opts)
+
+keymap.set("n", "<leader>r", function()
+	require("craftzdog.hsl").replaceHexWithHSL()
+end)
+
+keymap.set("n", "<leader>i", function()
+	require("craftzdog.lsp").toggleInlayHints()
+end)
