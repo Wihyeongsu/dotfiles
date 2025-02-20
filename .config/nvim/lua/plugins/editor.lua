@@ -72,7 +72,7 @@ return {
 				function()
 					local builtin = require("telescope.builtin")
 					builtin.find_files({
-						no_ignore = false,
+						no_ignore = true,
 						hidden = true,
 					})
 				end,
@@ -140,7 +140,7 @@ return {
 					telescope.extensions.file_browser.file_browser({
 						path = "%:p:h",
 						cwd = telescope_buffer_dir(),
-						respect_gitignore = false,
+						respect_gitignore = true,
 						hidden = true,
 						grouped = true,
 						previewer = false,
@@ -222,6 +222,7 @@ return {
 			signature = {
 				window = {
 					winblend = vim.o.pumblend,
+					false,
 				},
 			},
 		},
