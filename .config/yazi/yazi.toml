@@ -1,0 +1,6 @@
+[manager]
+show_hidden = true # Show hidden files
+show_symlink = true # Show the path of the symlink file point to
+sort_by = "natural" # Sort by natural
+sort_dir_first = true # Display directories first
+linemode = "permissions" # Display information(permissions)
