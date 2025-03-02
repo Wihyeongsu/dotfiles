@@ -72,7 +72,7 @@ return {
 				function()
 					local builtin = require("telescope.builtin")
 					builtin.find_files({
-						no_ignore = true,
+						no_ignore = false,
 						hidden = true,
 					})
 				end,
@@ -140,7 +140,7 @@ return {
 					telescope.extensions.file_browser.file_browser({
 						path = "%:p:h",
 						cwd = telescope_buffer_dir(),
-						respect_gitignore = true,
+						respect_gitignore = false,
 						hidden = true,
 						grouped = true,
 						previewer = false,
@@ -212,6 +212,27 @@ return {
 	},
 
 	{
+		"kazhala/close-buffers.nvim",
+		event = "VeryLazy",
+		keys = {
+			{
+				"<leader>th",
+				function()
+					require("close_buffers").delete({ type = "hidden" })
+				end,
+				"Close Hidden Buffers",
+			},
+			{
+				"<leader>tu",
+				function()
+					require("close_buffers").delete({ type = "nameless" })
+				end,
+				"Close Nameless Buffers",
+			},
+		},
+	},
+
+	{
 		"saghen/blink.cmp",
 		opts = {
 			completion = {
@@ -222,7 +243,6 @@ return {
 			signature = {
 				window = {
 					winblend = vim.o.pumblend,
-					false,
 				},
 			},
 		},
