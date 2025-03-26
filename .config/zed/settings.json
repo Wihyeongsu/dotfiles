@@ -67,7 +67,7 @@
   "assistant": {
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-3-5-sonnet"
+      "model": "claude-3-7-sonnet"
     },
     "version": "2"
   },
@@ -98,15 +98,41 @@
     },
     "clangd": {
       "binary": {
-        "path": "/path/to/clangd",
+        "path": "/usr/bin/clangd",
         "arguments": []
+      }
+    },
+    // Eclipse JDT LSP
+    "java": {
+      "settings": {
+        "java.jdt.ls.lombokSupport.enabled:": true
+      }
+    },
+    // toml
+    "taplo": {
+      "settings": {
+        "array_auto_collapse": false
+      }
+    },
+    // Rust
+    "rust-analyzer": {
+      "initialization_options": {
+        "inlayHints": {
+          "maxLength": null,
+          "lifetimeElisionHints": {
+            "enable": "skip_trivial",
+            "useParameterNames": true
+          },
+          "closureReturnTypeHints": {
+            "enable": "always"
+          }
+        }
       }
     }
   },
   "languages": {
     // Refer https://zed.dev/docs/languages/javascript and https://zed.dev/docs/languages/typescript for more info
     "TypeScript": {
-      // Refer https://github.com/jellydn/ts-inlay-hints for how to setup for Neovim and VSCode
       "inlay_hints": {
         "enabled": true,
         "show_parameter_hints": false,
@@ -119,11 +145,13 @@
       "formatter": { "language_server": { "name": "ruff" } },
       "language_servers": ["pyright", "ruff"]
     },
-    "languages": {
-      "C++": {
-        "format_on_save": "on",
-        "tab_size": 2
-      }
+    "C": {
+      "format_on_save": "on",
+      "tab_size": 2
+    },
+    "C++": {
+      "format_on_save": "on",
+      "tab_size": 2
     }
   },
   // Use zed commit editor
