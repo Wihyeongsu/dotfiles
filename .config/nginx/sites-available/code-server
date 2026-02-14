@@ -1,0 +1,19 @@
+server {
+    listen 8080;
+    server_name code.h0su.online;
+
+	access_log /var/log/nginx/code.h0su.online.access.log;
+	error_log /var/log/nginx/code.h0su.online.error.log;
+
+    location / {
+      proxy_pass http://localhost:3000/;
+      proxy_set_header Host $http_host;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection upgrade;
+      proxy_set_header Accept-Encoding gzip;
+    }
+	location ~ \/files/upload {
+		client_max_body_size 100M;
+	}
+}
+

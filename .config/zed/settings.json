@@ -1,44 +1,81 @@
 {
-	"icon_theme": "Bearded Icon Theme",
+	"helix_mode": true,
+ "base_keymap": "VSCode",
+ "minimap": {
+  "thumb": "always",
+  "show": "never"
+ },
+ "tabs": {
+		"git_status": true
+	},
+	"title_bar": {
+		"show_menus": false
+	},
+	"icon_theme": "Material Icon Theme",
 	"edit_predictions": {
+		"mode": "eager",
 		"disabled_globs": [
 			"**/.env*",
 			"**/*.pem",
 			"**/*.key",
 			"**/*.cert",
 			"**/*.crt",
-			"**/secrets.yml",
-			"algorithm/src/main.rs",
-			"main.cpp"
+			"**/secrets.yml"
 		]
 	},
-	"base_keymap": "VSCode",
-	"theme": "Catppuccin Frappé",
-	"experimental.theme_overrides": {
-		"background.appearance": "blurred",
-		"background": "#00000030",
-		"editor.background": "#00000030",
-		"editor.gutter.background": "#00000030",
-		"tab_bar.background": "#00000030",
-		"terminal.background": "#00000030",
-		"toolbar.background": "#00000030",
-		"tab.active_background": "#00000020",
-		"tab.inactive_background": "#00000000",
-		"status_bar.background": "#00000030",
-		"title_bar.background": "#00000030",
-		"panel.background": "#00000030",
-		"border.variant": "#00000000",
-		"scrollbar.track.border": "#00000000",
-		"editor.active_line.background": "#00000000"
-	},
-	"ui_font_size": 19,
+	// "base_keymap": "VSCode",
+	"theme": "Catppuccin Latte",
+	// "experimental.theme_overrides": {
+	// 	"background": "#352F44ff",
+	// 	"background.appearance": "blurred",
+	// 	//
+	// 	"border.variant": "#00000000",
+	// 	//
+	// 	"editor.background": "#00000030",
+	// 	"editor.gutter.background": "#00000030",
+	// 	"editor.active_line.background": "#5C547070",
+	// 	//
+	// 	"hint": "#788ca6ff",
+	// 	"hint.background": "#5a6f891a",
+	// 	"hint.border": "#293b5bff",
+	// 	//
+	// 	"panel.background": "#00000060",
+	// 	//
+	// 	"scrollbar.track.border": "#00000000",
+	// 	//
+	// 	"status_bar.background": "#00000060",
+	// 	//
+	// 	"syntax": {
+	// 		"comment": {
+	// 			"font_style": "italic"
+	// 		},
+	// 		"comment.doc": {
+	// 			"font_style": "italic"
+	// 		}
+	// 	},
+	// 	//
+	// 	"tab_bar.background": "#00000000",
+	// 	"tab.active_background": "#5C547070",
+	// 	"tab.inactive_background": "#00000000",
+	// 	//
+	// 	"terminal.background": "#00000030",
+	// 	//
+	// 	"title_bar.background": "#352F44f0",
+	// 	//
+	// 	"toolbar.background": "#00000060",
+	// 	//
+	// 	"warning": "#dec184ff",
+	// 	"warning.background": "#D3AF3733",
+	// 	"warning.border": "#5d4c2fff"
+	// },
+	"ui_font_size": 23,
 	"buffer_font_size": 20.0,
 	// NOTE: Change the font family to your preference
 	"buffer_font_family": "JetBrainsMono Nerd Font, Pretendard",
 	// Vim mode settings
-	"vim_mode": true,
+	"vim_mode": false,
 	// use relative line numbers
-	"relative_line_numbers": true,
+	"relative_line_numbers": "enabled",
 	"tab_bar": {
 		"show": true
 	},
@@ -56,12 +93,15 @@
 		"right_padding": 0.15
 	},
 	// Use Copilot Chat AI as default
-	"assistant": {
-		"default_model": {
+	"agent": {
+		"inline_assistant_model": {
+   "provider": "copilot_chat",
+   "model": "gpt-5.1"
+  },
+  "default_model": {
 			"provider": "copilot_chat",
-			"model": "claude-3-7-sonnet"
-		},
-		"version": "2"
+			"model": "gpt-5.1"
+		}
 	},
 	// Uncomment below to use local AI with Ollama, refer https://zed.dev/docs/language-model-integration?highlight=ollama#using-ollama-on-macos
 	// "assistant": {
@@ -75,6 +115,20 @@
 	"language_models": {
 		"ollama": {
 			"api_url": "http://localhost:11434"
+		}
+	},
+	// MCP
+	"mcpServers": {
+		"Framelink Figma MCP": {
+			// MacOS/Linux
+			"command": "npx",
+			"args": ["-y", "figma-developer-mcp", "--stdio"],
+			"env": {
+				"FIGMA_API_KEY": ""
+			}
+			// Windows
+			// "command": "cmd",
+			// "args": ["/c", "npx", "-y", "figma-developer-mcp", "--figma-api-key=YOUR-KEY", "--stdio"]
 		}
 	},
 	// Inlay hints preconfigured by Zed: Go, Rust, Typescript and Svelte
@@ -246,17 +300,43 @@
 					}
 				},
 				"checkOnSave": {
+					"enable": true,
 					"command": "clippy"
 				},
 				"inlayHints": {
-					"maxLength": 100,
+					"maxLength": null,
 					"lifetimeElisionHints": {
 						"enable": "skip_trivial",
 						"useParameterNames": true
 					},
 					"closureReturnTypeHints": {
 						"enable": "always"
+					},
+					"parameterHints": {
+						"enable": true
+					},
+					"typeHints": {
+						"enable": true,
+						"hideClosureInitialization": false,
+						"hideNamedConstructor": false
+					},
+					"discriminantHints": {
+						"enable": "always"
 					}
+				},
+				"completion": {
+					"autoimport": {
+						"enable": true
+					},
+					"addSemicolonToUnit": true
+				},
+				"cargo": {
+					"buildScripts": {
+						"enabled": true
+					}
+				},
+				"procMacro": {
+					"enabled": true
 				}
 			}
 		},
@@ -268,7 +348,7 @@
 		"biome": {
 			"settings": {
 				// Enable biome only when biome.json is present
-				"require_config_file": true
+				"require_config_file": false
 			}
 		}
 	},
@@ -296,8 +376,11 @@
 			}
 		},
 		"Python": {
-			"format_on_save": { "language_server": { "name": "ruff" } },
-			"formatter": { "language_server": { "name": "ruff" } },
+			"formatter": {
+				"language_server": {
+					"name": "ruff"
+				}
+			},
 			"language_servers": ["pyright", "ruff"]
 		},
 		"C": {
@@ -313,13 +396,14 @@
 			"format_on_save": "on"
 		},
 		"Elixir": {
-			"language_servers": ["next-ls"],
-			"format_on_save": {
+			"formatter": {
 				"external": {
 					"command": "mix",
 					"arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
 				}
-			}
+			},
+			"language_servers": ["next-ls"],
+			"format_on_save": "on"
 		}
 	},
 	"formatter": {
