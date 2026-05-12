@@ -6,7 +6,7 @@ server {
         error_log /var/log/nginx/dev.h0su.online.error.log;
 
     location / {
-      proxy_pass http://localhost:3001;
+      proxy_pass http://host.containers.internal:3001;
       proxy_set_header Host $http_host;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection upgrade;
@@ -26,7 +26,7 @@ server {
         error_log /var/log/nginx/server.h0su.online.error.log;
 
     location / {
-      proxy_pass http://localhost:3002;
+      proxy_pass http://host.containers.internal:3002;
       proxy_set_header Host $http_host;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection upgrade;
