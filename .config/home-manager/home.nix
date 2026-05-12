@@ -46,6 +46,7 @@
 #   org.gradle.console=verbose
 #   org.gradle.daemon.idletimeout=3600000
 # '';
+      # ".oh-my-zsh/custom/themes/lcars.zsh-theme".source = ../../.oh-my-zsh/custom/themes/lcars.zsh-theme;
   };
 
 # Home Manager can also manage your environment variables through
@@ -123,17 +124,26 @@
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      plugins = [
-        {
-          name = "spaceship";
-          src = pkgs.spaceship-prompt;
-          file = "lib/spaceship-prompt/spaceship.zsh";
-        }
-      ];
+      # plugins = [
+      #   {
+      #     name = "spaceship";
+      #     src = pkgs.spaceship-prompt;
+      #     file = "lib/spaceship-prompt/spaceship.zsh";
+      #   }
+      # ];
       oh-my-zsh = { # "ohMyZsh" without Home Manager
         enable = true;
-        plugins = [ "git" "sudo" "docker" "systemd"];
-        theme = "";
+        plugins = [ 
+                    "git"
+                    "docker"
+                    "systemd"
+                    "firewalld"
+                    "git-auto-fetch"
+                    "rsync"
+                    "battery"
+                    ];
+        custom = "$HOME/.oh-my-zsh/custom";
+        theme = "lcars";
       };
       shellAliases = {
         ll = "ls -la";
